@@ -1,16 +1,16 @@
 import React from "react";
 import "./Menu-item.scss";
-const MenuItem = function ({ title, image ,size }) {
-  console.log(image);
+const MenuItem = function ({ title, image, size }) {
   //same props.title ={title} => destructuring
   return (
-    <div
-      style={{ backgroundImage: `url(${image})`, objectFit: "cover" }}
-      className={`${size} menu-item`}
-    >
+    <div className={`${size} menu-item`}>
+      <div
+        className="background-image"
+        style={{ backgroundImage: `url(${image})` }}
+      />
       <div className="content">
-        <h1 className="title">{title}</h1>
-        <span className="subtitle">helo</span>
+        <h1 className="title">{title.toUpperCase()}</h1>
+        <span className="subtitle">SHOP NOW</span>
       </div>
     </div>
   );
