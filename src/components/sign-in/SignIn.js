@@ -76,7 +76,7 @@ const SignIn = function () {
           type={"email"}
           name={"email"}
           value={inputState.email}
-          onChange={handleInputChange}
+          handleChange={handleInputChange}
           label="email"
           required
         />
@@ -85,7 +85,7 @@ const SignIn = function () {
           type={"password"}
           name={"password"}
           value={inputState.password}
-          onChange={handleInputChange}
+          handleChange={handleInputChange}
           label="password"
           required
         />
@@ -126,21 +126,23 @@ const SignIn = function () {
 //         <span>Sign in with your email and password</span>
 
 //         <form onSubmit={this.handleSubmit}>
-//           <input
+//           <FormInput
 //             type={"email"}
 //             name={"email"}
 //             value={this.state.email}
+//             label='email'
 //             onChange={this.handleChange}
 //             required
 //           />
-//           <input
+//           <FormInput
 //             type={"password"}
 //             name={"password"}
 //             value={this.state.password}
+//             label="password"
 //             onChange={this.handleChange}
 //             required
 //           />
-//           <input type={"submit"} value="submit" />
+//           <CustomBtn type={"submit"}>Sign in</CustomBtn>
 //         </form>
 //       </div>
 //     );
