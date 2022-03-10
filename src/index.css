@@ -2,6 +2,7 @@
 body {
   margin: 0;
   font-family: "Lexend Peta", sans-serif;
+  padding: 20px 60px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
