@@ -1,9 +1,12 @@
 import React from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auths } from "../../firebase/firebase.utilis";
+
+import {
+  auth,
+  createUserProfileDocument,
+} from "../../firebase/firbase.utilites";
 import CustomBtn from "../custom-btn/CustomBtn";
 import FormInput from "../Form-input/FormInput";
-import { useState } from "react";
+import "./SignUp.scss";
 
 // const
 class SignUp extends React.Component {
@@ -11,61 +14,63 @@ class SignUp extends React.Component {
     super();
 
     this.state = {
-      text: "",
+      displayName: "",
       email: "",
       password: "",
+      confirmPassword: "",
     };
   }
   handleInputChange = (event) => {
-    const { type, value } = event.target;
+    const { name, value } = event.target;
 
     this.setState(() => {
-      return { ...this.state, [type]: value };
+      return { [name]: value };
     });
   };
-  async register() {
-    // const { text, email, password } = this.state;
-    console.log(this.state);
-    //   try {
-    //     const user = await createUserWithEmailAndPassword(auths);
-    //     console.log(user);
-    //   } catch (err) {
-    //     console.log(err.message);
-    //   }
-  }
-  // register = async function () {
 
-  //   console.log(text, email, password);
-  //   try {
-  //     const user = await createUserWithEmailAndPassword(auths);
-  //     console.log(user);
-  //   } catch (err) {
-  //     console.log(err.message);
-  //   }
-  // };
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
-    this.setState({
-      text: "",
-      email: "",
-      password: "",
-    });
+    const { email, password, displayName, confirmPassword } = this.state;
+    //1 password not match
+    if (confirmPassword !== password) {
+      alert("Password not match!");
+      return;
+    }
+
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      console.log(email, password, displayName);
+      await createUserProfileDocument(user, { displayName });
+
+      this.setState({
+        displayName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
+
   render() {
-    const { handleSubmit, handleInputChange, register } = this;
-    const { email, password, text } = this.state;
+    const { handleSubmit, handleInputChange } = this;
+    const { email, password, displayName, confirmPassword } = this.state;
     return (
-      <div className="sign-in">
-        <h2 className="title">Register with Your details</h2>
-        {/* <span>Sign in with your email and password</span> */}
+      <div className="sign-up">
+        <h2 className="title">I do not have a account</h2>
+        <span>Sign up with your email and password</span>
 
         <form onSubmit={handleSubmit}>
           <FormInput
             type={"text"}
-            name={"text"}
-            value={text}
+            name={"displayName"}
+            value={displayName}
             handleChange={handleInputChange}
-            label="name"
+            label="display Name"
             required
           />
           <FormInput
@@ -85,13 +90,19 @@ class SignUp extends React.Component {
             label="password"
             required
           />
-          <CustomBtn type={"submit"} onClick={register}>
-            register
-          </CustomBtn>
+          <FormInput
+            type={"password"}
+            name={"confirmPassword"}
+            value={confirmPassword}
+            handleChange={handleInputChange}
+            label="confirm  password"
+            required
+          />
+          <CustomBtn type={"submit"}>Sign up</CustomBtn>
         </form>
       </div>
     );
   }
 }
 
-// export default SignUp;
+export default SignUp;
