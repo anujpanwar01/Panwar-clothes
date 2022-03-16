@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector, useDisptach } from "react-redux";
 import "./App.css";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
